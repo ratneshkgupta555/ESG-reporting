@@ -1,0 +1,83 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.main-section {
+    padding: 20px;
+}
+
+.control {
+    font-size: 16px;
+    display: flex;
+    padding: 20px;
+
+    .label-name {
+        width: 30%;
+    }
+    .value-part {
+        display: inline-grid;
+        width: 70%;
+        input {
+            height: 35px;
+            font-size: 16px;
+        }
+    }
+
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.info-control {
+    display: flex;
+
+    .info-icon {
+        margin-top: 10px;
+    }
+
+    .range-text {
+        padding: 10px;
+        font-style: italic;
+        font-weight: 12px;
+        color: black;
+    }
+}
+.action-buttons {
+    text-align: right;
+    // width: 79%;
+    .mat-raised-button {
+        background-color: black;
+        color: white;
+    }
+}
+
+.display-report-section {
+    padding: 20px 0;
+    .mat-table {
+        border: 1px solid black;
+    }
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.error {
+    color: red !important;
+}

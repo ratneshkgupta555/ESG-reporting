@@ -1,0 +1,53 @@
+<mat-sidenav-container autosize>
+  <mat-sidenav #sidenav mode="side" opened="isExpanded">
+    <mat-nav-list>
+
+      <mat-list-item (click)="isExpanded = !isExpanded">
+        <mat-icon mat-list-icon class="chevron-button" [ngClass]="{ rotated: isExpanded }">chevron_right
+        </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'upload'" title="Upload ESG Reports">
+        <!-- <mat-icon class="material-icons">cloud_upload</mat-icon> -->
+        <mat-icon mat-list-icon>cloud_upload</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Upload</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'info'" title="Retrieve ESG Report">
+        <!-- <mat-icon class="material-icons">view_list</mat-icon> -->
+        <mat-icon mat-list-icon>view_list</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Retrieve</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'upload-questionnaire'" title="Upload Survey Questionnaire">
+        <!-- <mat-icon class="material-icons" >upload</mat-icon> -->
+        <mat-icon mat-list-icon>upload</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Upload Survey Questionnaire</span>
+      </mat-list-item>
+      
+      <mat-list-item [routerLink]="'questionnaire-status'" title="Questionnaire Status">
+        <mat-icon >preview</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Questionnaire Status</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'download-report'" title="Download Draft Report">
+        <mat-icon mat-list-icon>download</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Download Draft Report</span>
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="'generate-answer'" title="Generate Answer">
+        <mat-icon mat-list-icon>calculate</mat-icon>
+        <span *ngIf="isExpanded" class="menu-item">Generate Answer</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content - rendered Content for the current router path into the <router-outlet>, e.g. /dashboard or /info-->
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <div class="main-title">ESG REPORTING</div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

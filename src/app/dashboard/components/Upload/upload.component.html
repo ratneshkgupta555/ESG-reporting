@@ -1,0 +1,41 @@
+<div class="main-section">
+    <h2>Upload multiple ESG Reports</h2>
+    <form [formGroup]="documentForm">
+        <div class="control" formArrayName="files">
+            <div class="label-name">Document Name</div>
+            <div class="value-part value-part-new">
+                <div *ngFor="let control of getControls(); let i =index; trackBy:func;">
+                    <div formControlName="i">
+                        <input accept="application/pdf" type="file" (change)="changeFile($event, i)" />
+                    </div>
+                    <div (click)="removeDocument(i)">
+                        <mat-icon>delete</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="add-button">
+                <button mat-raised-button (click)="addDocument()">Add</button>
+            </div>
+        </div>
+        <div class="control disabled">
+            <div class="label-name">Document URL</div>
+            <div class="value-part" formControlName="documentUrl">
+                <input type="text" placeholder="Enter document url..." />
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="label-name">Year Of Report</div>
+            <div class="value-part">
+                <input  formControlName="yearOfReport" type="number" [min]="minYear" [max]="maxYear" placeholder="Enter year of report..." />
+                <div class="info-control">
+                    <mat-icon class="material-icons info-icon">info</mat-icon>
+                    <div class="range-text">Range between {{minYear}} - {{maxYear}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button [disabled]="this.fileToUpload.length === 0" mat-raised-button (click)="onUploadReports()">Submit</button>
+        </div>
+    </form>
+</div>

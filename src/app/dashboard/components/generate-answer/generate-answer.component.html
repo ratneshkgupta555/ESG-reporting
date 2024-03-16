@@ -1,0 +1,23 @@
+<div class="main-section">
+    <h2>Generate Answer: Chat Bot</h2>
+    <ng-container *ngFor="let message of messages">
+        <div class="message" [ngClass]="{ 'from': message.author === 'bot',
+'to': message.author === 'user' }">
+            {{ message.content }}
+        </div>
+    </ng-container>
+    <div class="send-message-control">
+        <!-- <label *ngIf="messages.length == 0; else dialogInfo" for="nameField">Your message</label> -->
+        <div class="chat-input">
+            <input [(ngModel)]="value" (keyup.enter)="sendMessage()" type="text">
+        </div>
+        <div>
+            <button mat-raised-button (click)="sendMessage()" title="Send message">
+                <mat-icon>send</mat-icon>
+            </button>
+        </div>
+    </div>
+    <ng-template #dialogInfo>
+        <span [className]="'float-right'">Total messages: {{messages.length}}</span>
+    </ng-template>
+</div>
