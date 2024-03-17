@@ -19,7 +19,7 @@ export class ApiService {
     //return this.httpClient.get(Root_URL+url, headerOptions || this.headerOptions);
   }
 
-  postAPI(url: any, payload: any, headerOptions: any): Observable<any> {
+  postAPI(url: any, payload: any, headerOptions?: any): Observable<any> {
     // return of(null);
    return this.httpClient.post(Root_URL+url, payload, headerOptions || this.headerOptions);
   }
