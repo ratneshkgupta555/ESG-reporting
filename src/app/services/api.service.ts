@@ -11,7 +11,7 @@ export class ApiService {
     'content-type': 'application/json',
     // 'authentication', `${token}`
   };
-  
+
   constructor(private httpClient: HttpClient) { }
 
   getAPI(url: any, headerOptions?: any): Observable<any> {
@@ -21,6 +21,6 @@ export class ApiService {
 
   postAPI(url: any, payload: any, headerOptions?: any): Observable<any> {
     // return of(null);
-   return this.httpClient.post(Root_URL+url, payload, headerOptions || this.headerOptions);
+    return this.httpClient.post(Root_URL + url, payload, headerOptions || this.headerOptions);
   }
 }

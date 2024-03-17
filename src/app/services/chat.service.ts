@@ -40,10 +40,15 @@ export class ChatService {
             }
             this.apiService.postAPI(API_URL.GENERATE_ANSWER, payload).subscribe({
                 next: (response: any) => {
-                    this.snackBar.open('Reports upload successfully !', 'success', {
-                        duration: 3000
-                    });
-                    this.calculatingBotAnswer(msg);
+                    if(response) {
+                        this.snackBar.open('Reports upload successfully !', 'success', {
+                            duration: 3000
+                        });
+                        this.calculatingBotAnswer(response.questionnireSummary.response);
+                    } else {
+                        this.calculatingBotAnswer(msg);
+                    }
+                   
                 }, error: (err: any) => {
                     this.snackBar.open('Something went wrong !', 'error', {
                         duration: 3000
