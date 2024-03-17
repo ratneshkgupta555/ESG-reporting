@@ -15,8 +15,8 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   getAPI(url: any, headerOptions?: any): Observable<any> {
-    return of(null);
-    //return this.httpClient.get(Root_URL+url, headerOptions || this.headerOptions);
+    // return of(null);
+    return this.httpClient.get(Root_URL+url, headerOptions || this.headerOptions);
   }
 
   postAPI(url: any, payload: any, headerOptions?: any): Observable<any> {

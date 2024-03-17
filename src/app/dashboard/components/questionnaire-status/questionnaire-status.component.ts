@@ -38,11 +38,15 @@ export class QuestionnaireStatusComponent implements OnInit {
     this.loading = true;
     this.apiService.getAPI(URL).subscribe({
       next: (response: any) => {
-        this.loading = true;
-        this.dataSource.data = response || dummyResponse;
+        if(response) {
+          this.dataSource.data = [response]; //|| dummyResponse;
+        }
+        this.loading = false;
+        
         this.snackBar.open('Document Generated Successfully !', 'success', {
           duration: 3000
         });
+
       }, error: (err: any) => {
         this.loading = false;
         this.snackBar.open('Something went wrong !', 'error', {

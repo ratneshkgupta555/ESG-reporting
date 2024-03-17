@@ -48,7 +48,7 @@ export class UploadQuestionnaireComponent implements OnInit {
     this.loading = true;
     this.apiService.postAPI(API_URL.GET_UPLOAD_SURVEY_QUESTIONNAIRE, payload, null).subscribe({
       next: (response: any) => {
-        this.dataSource.data = response || dummyResponse;
+        this.dataSource.data = [response]; // || dummyResponse;
         this.loading = false;
         this.snackBar.open('Document generated successfully !', 'success', {
           duration: 3000

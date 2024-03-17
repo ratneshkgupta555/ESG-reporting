@@ -51,7 +51,9 @@ export class DownloadreportComponent implements OnInit {
     this.loading = true;
     this.apiService.getAPI(URL).subscribe({
       next: (response: any) => {
-        this.dataSource.data = response || dummyResponse;
+        if(response) {
+          this.dataSource.data = this.formatResponse(response);//response || dummyResponse;
+        }
         this.loading = false;
         this.snackBar.open('Document Generated Successfully !', 'success', {
           duration: 3000
@@ -68,6 +70,20 @@ export class DownloadreportComponent implements OnInit {
 
   checkValidity() {
     return !!this.yearOfReport && (this.yearOfReport && this.yearOfReport <= 2024 && this.yearOfReport >= 1900);
+  }
+
+  formatResponse(response: any): any[] {
+    let tableData: any[] = [];
+    response.forEach((doc: any) => {
+      tableData.push({
+        'documentName': doc.documentName,
+        'documentType': doc.metadata.documentType || null,
+        'referenceLink': doc.metadata.referenceLink || null,
+        'generatedBy': doc.metadata.generatedBy || null,
+        'reportYear': doc.metadata.reportYear || null,
+      })
+    });
+    return tableData;
   }
 
 }
