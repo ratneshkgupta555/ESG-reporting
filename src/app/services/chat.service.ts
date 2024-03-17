@@ -41,13 +41,10 @@ export class ChatService {
             this.apiService.postAPI(API_URL.GENERATE_ANSWER, payload).subscribe({
                 next: (response: any) => {
                     if(response) {
-                        this.snackBar.open('Reports upload successfully !', 'success', {
-                            duration: 3000
-                        });
-                        this.calculatingBotAnswer(response.questionnireSummary.response);
-                    } else {
-                        this.calculatingBotAnswer(msg);
-                    }
+                       
+                        this.messageMap[this.askedQuestion] = response.questionnireSummary.response;
+                    } 
+                    this.calculatingBotAnswer(this.askedQuestion);
                    
                 }, error: (err: any) => {
                     this.snackBar.open('Something went wrong !', 'error', {

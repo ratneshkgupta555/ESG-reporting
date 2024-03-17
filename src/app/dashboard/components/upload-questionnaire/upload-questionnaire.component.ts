@@ -19,11 +19,11 @@ const dummyResponse = [
 export class UploadQuestionnaireComponent implements OnInit {
   minYear = INPUT.MIN_YEAR;
   maxYear = INPUT.MAX_YEAR;
-  displayedColumns = ['taskId', 'status', 'createdAt'];
+  displayedColumns = ['taskid', 'status', 'createAt'];
   dataSource = new MatTableDataSource<any>([]);
-  fileToUpload = null;
+  fileToUpload: Blob | any = null;
   yearOfReport = null;
-  userId = null;
+  userId: string = "";
   loading = false;
 
   constructor(
@@ -35,33 +35,44 @@ export class UploadQuestionnaireComponent implements OnInit {
   }
 
   onSubmitReports() {
-    const formdata: FormData = new FormData();
+    const multipartPayload: FormData = this.createRequestPayload();
 
-    if(this.fileToUpload) {
-      formdata.append('pdfFile', this.fileToUpload);
-    }
-    const payload = {
-      files: formdata,
-      yearOfReport: this.yearOfReport,
-      userId: this.userId
-    };
+    // calling API 
     this.loading = true;
-    this.apiService.postAPI(API_URL.GET_UPLOAD_SURVEY_QUESTIONNAIRE, payload, null).subscribe({
+
+    this.apiService.postAPI(
+      API_URL.GET_UPLOAD_SURVEY_QUESTIONNAIRE,
+      multipartPayload,
+    ).subscribe({
       next: (response: any) => {
-        this.dataSource.data = [response]; // || dummyResponse;
+        this.dataSource.data = [response]; 
         this.loading = false;
-        this.snackBar.open('Document generated successfully !', 'success', {
-          duration: 3000
-        });
+        
       }, error: (err: any) => {
         this.snackBar.open('Something went wrong !', 'error', {
           duration: 3000
         });
         this.loading = false;
       }
-  })
+    })
 
-   
+
+  }
+
+  private createRequestPayload() {
+    const multipartPayload: FormData = new FormData();
+
+    if (this.fileToUpload) {
+      multipartPayload.append("SurveyQuestionnaireDocumentName", this.fileToUpload);
+    }
+    multipartPayload.append('metadata', JSON.stringify(
+      {
+        "generateReportforYear": this.yearOfReport,
+        "userId": this.userId.trim()
+      }
+    ));
+    multipartPayload.append("document Type", 'PDF');
+    return multipartPayload;
   }
 
   changeFile(evt: any) {
@@ -69,8 +80,8 @@ export class UploadQuestionnaireComponent implements OnInit {
   }
 
   checkValidity() {
-    return !!this.fileToUpload 
-      && !!this.yearOfReport && (this.yearOfReport && this.yearOfReport <= 2024 && this.yearOfReport >= 1900) 
+    return !!this.fileToUpload
+      && !!this.yearOfReport && (this.yearOfReport && this.yearOfReport <= 2024 && this.yearOfReport >= 1900)
       && !!this.userId;
   }
 

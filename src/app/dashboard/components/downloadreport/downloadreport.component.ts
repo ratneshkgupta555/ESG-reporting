@@ -2,27 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { INPUT } from '../../shared/constant';
-import { API_URL } from 'src/app/services/serviceconstant';
+import { API_URL, Root_URL } from 'src/app/services/serviceconstant';
 import { ApiService } from 'src/app/services/api.service';
 
-const dummyResponse = [
-  {
-    documentName: 'TestDoc', documentType: 'PDF',
-    referenceLink: 'test link', generatedBy: 'userid1', reportYear: 2011
-  },
-  {
-    documentName: 'DummyDoc', documentType: 'PDF',
-    referenceLink: 'test link', generatedBy: 'userid11', reportYear: 2011
-  },
-  {
-    documentName: 'XYXDOC', documentType: 'PDF',
-    referenceLink: 'test link', generatedBy: 'userid21', reportYear: 2012
-  },
-  {
-    documentName: 'TestDoc2', documentType: 'PDF',
-    referenceLink: 'test link', generatedBy: 'userid10', reportYear: 2023
-  }
-]
 @Component({
   selector: 'app-downloadreport',
   templateUrl: './downloadreport.component.html',
@@ -47,25 +29,26 @@ export class DownloadreportComponent implements OnInit {
   }
 
   downloadFirstDraft() {
-    const URL = `${API_URL.GET_FIRST_DRAFT}/${this.yearOfReport}`;
+    const URL = `${Root_URL}${API_URL.GET_FIRST_DRAFT}/${this.yearOfReport}`;
     this.loading = true;
-    this.apiService.getAPI(URL).subscribe({
-      next: (response: any) => {
-        if(response) {
-          this.dataSource.data = this.formatResponse(response);//response || dummyResponse;
-        }
-        this.loading = false;
-        this.snackBar.open('Document Generated Successfully !', 'success', {
-          duration: 3000
-        });
+    window.open(URL, "_blank");
+    // this.apiService.getAPI(URL).subscribe({
+    //   next: (response: any) => {
+    //     if(response) {
+    //       this.dataSource.data = this.formatResponse(response);//response || dummyResponse;
+    //     }
+    //     this.loading = false;
+    //     this.snackBar.open('Document Generated Successfully !', 'success', {
+    //       duration: 3000
+    //     });
         
-      }, error: (err: any) => {
-        this.loading = false;
-        this.snackBar.open('Something went wrong !', 'error', {
-          duration: 3000
-        });
-      }
-    });
+    //   }, error: (err: any) => {
+    //     this.loading = false;
+    //     this.snackBar.open('Something went wrong !', 'error', {
+    //       duration: 3000
+    //     });
+    //   }
+    // });
   }
 
   checkValidity() {

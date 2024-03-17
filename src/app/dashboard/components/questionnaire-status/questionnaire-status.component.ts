@@ -19,7 +19,7 @@ const dummyResponse = [
 export class QuestionnaireStatusComponent implements OnInit {
   minYear = INPUT.MIN_YEAR;
   maxYear = INPUT.MAX_YEAR;
-  displayedColumns = ['taskId', 'status', 'createdAt'];
+  displayedColumns = ['taskid', 'status', 'createAt'];
   dataSource = new MatTableDataSource<any>([]);
   yearOfReport = null;
   taskId = null;

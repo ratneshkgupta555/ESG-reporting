@@ -34,9 +34,9 @@
         <div class="display-report-section" *ngIf="dataSource.data.length > 0">
             <mat-table #table [dataSource]="dataSource">
     
-                <ng-container matColumnDef="taskId">
+                <ng-container matColumnDef="taskid">
                   <mat-header-cell *matHeaderCellDef> Task Id </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.taskId}} </mat-cell>
+                  <mat-cell *matCellDef="let element"> {{element.taskid}} </mat-cell>
                 </ng-container>
             
                 <ng-container matColumnDef="status">
@@ -44,9 +44,9 @@
                   <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
                 </ng-container>
             
-                <ng-container matColumnDef="createdAt">
+                <ng-container matColumnDef="createAt">
                   <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.createdAt}} </mat-cell>
+                  <mat-cell *matCellDef="let element"> {{element.createAt}} </mat-cell>
                 </ng-container>
             
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

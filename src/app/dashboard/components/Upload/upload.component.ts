@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from 'src/app/services/api.service';
 import { API_URL } from 'src/app/services/serviceconstant';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-upload',
@@ -14,13 +15,16 @@ export class UploadComponent implements OnInit {
   minYear = INPUT.MIN_YEAR;
   maxYear = INPUT.MAX_YEAR;
   filesCount = 0;
-  fileToUpload: any = [];
+  filesToUpload: Blob | any = [];
   isYearInvalid = false;
   documentForm: FormGroup = new FormGroup({
     files: new FormArray([]),
     documentUrl: new FormControl(null),
     yearOfReport: new FormControl(null, Validators.required)
   });
+
+  displayedColumns = ['taskid', 'status', 'createAt'];
+  dataSource = new MatTableDataSource<any>([]);
   loading = false;
 
   constructor(
@@ -58,11 +62,9 @@ export class UploadComponent implements OnInit {
 
   onUploadReports() {
     this.loading= true;
-    this.apiService.postAPI(API_URL.UPLOAD_ALL_REPORTS, this.generatePayload(), null).subscribe({
+    this.apiService.postAPI(API_URL.UPLOAD_ALL_REPORTS, this.generatePayload()).subscribe({
       next: (response: any) => {
-        this.snackBar.open('Reports upload successfully !', 'success', {
-          duration: 3000
-        });
+        this.dataSource.data = [response]; 
         this.loading = false;
       }, error: (err: any) => {
         this.snackBar.open('Something went wrong !', 'error', {
@@ -75,24 +77,19 @@ export class UploadComponent implements OnInit {
 
   generatePayload() {
     const formdata: FormData = new FormData();
-    if(this.fileToUpload.length > 0) {
-      this.fileToUpload.forEach((file: Blob) => {
-        formdata.append('files[]', file);
-      });
-    }
-   
-    if (this.fileToUpload.length > 0
+    this.filesToUpload.forEach((file: any) => {
+      formdata.append('documentName', file);
+    })
+
+    if (this.filesToUpload.length > 0
       && this.documentForm.controls.yearOfReport.value) {
-      const payload = {
-        yearOfReport: this.documentForm.controls.yearOfReport.value,
-        documentUrl: this.documentForm.controls.documentUrl.value
-      };
-      formdata.append('uploadData', JSON.stringify(payload));
+      formdata.append('yearOfReport', this.documentForm.controls.yearOfReport.value?.toString());
+      formdata.append('DocumentURL', "");
     }
     return formdata;
   }
 
   changeFile(evt: any, index: number) {
-    this.fileToUpload[index] = evt.target.files[0];
+    this.filesToUpload[index] = evt.target.files[0];
   }
 }

@@ -47,10 +47,12 @@ export class InfoComponent implements OnInit {
 
   onRetriveClick() {
     this.loading = true;
-    this.apiService.postAPI(API_URL.RETRIEVE_ALL_REPORTS, this.yearOfReport).subscribe({
+    this.apiService.postAPI(
+      API_URL.RETRIEVE_ALL_REPORTS, 
+      {reportYear: this.yearOfReport}).subscribe({
       next: (response: any) => {
-        if (response) {
-          this.dataSource.data = this.formatResponse(response);// || dummyResponse;
+        if (response?.documents) {
+          this.dataSource.data = this.formatResponse(response.documents);// || dummyResponse;
           this.snackBar.open('Reports upload successfully !', 'success', {
             duration: 3000
           });

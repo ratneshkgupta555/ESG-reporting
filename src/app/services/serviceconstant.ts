@@ -6,4 +6,4 @@ export const API_URL = {
     GENERATE_ANSWER: "/questionnaire/generatefirstdraft/generateAnswer"
 }
 
-export const Root_URL = "https://flyers-spring-boot-app-dot-wellsfargo-genai24-8177.ue.r.appspot.com";
+export const Root_URL = "https://flyers-spring-boot-app-dot-wellsfargo-genai24-8177.ue.r.appspot.com/api"
