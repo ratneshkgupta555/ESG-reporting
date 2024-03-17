@@ -20,6 +20,7 @@ export class ChatService {
     };
 
     getBotAnswer(msg: string) {
+        // Here write API code
         const userMessage = new Message("user", msg);
         this.conversation.next([userMessage]);
         const botMessage = new Message("bot", this.getBotMessage(msg));

@@ -24,6 +24,8 @@ export class UploadQuestionnaireComponent implements OnInit {
   fileToUpload = null;
   yearOfReport = null;
   userId = null;
+  loading = false;
+
   constructor(
     private snackBar: MatSnackBar,
     private apiService: ApiService
@@ -33,21 +35,31 @@ export class UploadQuestionnaireComponent implements OnInit {
   }
 
   onSubmitReports() {
+    const formdata: FormData = new FormData();
+
+    if(this.fileToUpload) {
+      formdata.append('pdfFile', this.fileToUpload);
+    }
     const payload = {
-      files: this.fileToUpload,
+      files: formdata,
       yearOfReport: this.yearOfReport,
       userId: this.userId
     };
+    this.loading = true;
     this.apiService.postAPI(API_URL.GET_UPLOAD_SURVEY_QUESTIONNAIRE, payload, null).subscribe({
       next: (response: any) => {
         this.dataSource.data = response || dummyResponse;
+        this.loading = false;
         this.snackBar.open('Document generated successfully !', 'success', {
           duration: 3000
         });
       }, error: (err: any) => {
-
+        this.snackBar.open('Something went wrong !', 'error', {
+          duration: 3000
+        });
+        this.loading = false;
       }
-    })
+  })
 
    
   }

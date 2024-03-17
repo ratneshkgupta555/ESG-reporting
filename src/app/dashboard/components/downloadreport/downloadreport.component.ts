@@ -48,17 +48,22 @@ export class DownloadreportComponent implements OnInit {
 
   downloadFirstDraft() {
     const URL = `${API_URL.GET_FIRST_DRAFT}/${this.yearOfReport}`;
+    this.loading = true;
     this.apiService.getAPI(URL).subscribe({
       next: (response: any) => {
         this.dataSource.data = response || dummyResponse;
+        this.loading = false;
         this.snackBar.open('Document Generated Successfully !', 'success', {
           duration: 3000
         });
+        
       }, error: (err: any) => {
-
+        this.loading = false;
+        this.snackBar.open('Something went wrong !', 'error', {
+          duration: 3000
+        });
       }
     });
-    this.loading = true;
   }
 
   checkValidity() {

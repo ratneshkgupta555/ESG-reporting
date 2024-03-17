@@ -23,6 +23,7 @@ export class QuestionnaireStatusComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
   yearOfReport = null;
   taskId = null;
+  loading = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -34,14 +35,19 @@ export class QuestionnaireStatusComponent implements OnInit {
 
   onSubmitReports() {
     const URL = `${API_URL.GET_UPLOAD_SURVEY_QUESTIONNAIRE}/${this.yearOfReport}/${this.taskId}/status`;
+    this.loading = true;
     this.apiService.getAPI(URL).subscribe({
       next: (response: any) => {
+        this.loading = true;
         this.dataSource.data = response || dummyResponse;
         this.snackBar.open('Document Generated Successfully !', 'success', {
           duration: 3000
         });
       }, error: (err: any) => {
-        
+        this.loading = false;
+        this.snackBar.open('Something went wrong !', 'error', {
+          duration: 3000
+        });
       }
     })
    

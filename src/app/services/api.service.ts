@@ -8,7 +8,8 @@ import { Root_URL } from './serviceconstant';
 })
 export class ApiService {
   headerOptions = {
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    // 'authentication', `${token}`
   };
   
   constructor(private httpClient: HttpClient) { }
@@ -19,7 +20,7 @@ export class ApiService {
   }
 
   postAPI(url: any, payload: any, headerOptions: any): Observable<any> {
-    return of(null);
-   // return this.httpClient.post(Root_URL+url, payload, headerOptions || this.headerOptions);
+    // return of(null);
+   return this.httpClient.post(Root_URL+url, payload, headerOptions || this.headerOptions);
   }
 }

@@ -73,6 +73,9 @@ button:focus {
         border: 1px solid black;
     }
 }
+.no-click {
+    pointer-events: none;
+}
 .disabled {
     pointer-events: none;
     opacity: 0.3;
@@ -80,4 +83,12 @@ button:focus {
 
 .error {
     color: red !important;
+}
+.mat-progress-spinner {
+    margin: 0px auto !important;
+    width: 100px;
+    height: 100px;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
 }

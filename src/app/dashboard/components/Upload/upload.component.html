@@ -1,6 +1,7 @@
-<div class="main-section">
+<div class="main-section" >
     <h2>Upload multiple ESG Reports</h2>
-    <form [formGroup]="documentForm">
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+    <form [formGroup]="documentForm" [ngClass]="loading ? 'disabled': ''">
         <div class="control" formArrayName="files">
             <div class="label-name">Document Name</div>
             <div class="value-part value-part-new">
@@ -35,7 +36,7 @@
             </div>
         </div>
         <div class="action-buttons">
-            <button [disabled]="this.fileToUpload.length === 0" mat-raised-button (click)="onUploadReports()">Submit</button>
+            <button [disabled]="this.fileToUpload.length === 0 || isYearInvalid" mat-raised-button (click)="onUploadReports()">Submit</button>
         </div>
     </form>
 </div>

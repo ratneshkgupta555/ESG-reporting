@@ -1,7 +1,10 @@
 <div class="main-section">
     <!-- <mat-spinner *ngIf="loading" mode="indeterminate" style="margin:0 auto;"></mat-spinner> -->
     <h2>Download First draft Report</h2>
-    <div class="control">
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+    
+    <div [ngClass]="loading ? 'disabled': ''">
+      <div class="control">
         <div class="label-name">Year Of Report</div>
         <div class="value-part">
             <input [(ngModel)]="yearOfReport" type="number" [min]="minYear" [max]="maxYear" placeholder="Enter year of report..." />
@@ -51,5 +54,6 @@
             <mat-icon class="material-icons info-icon">info</mat-icon>
             <div class="range-text">No data available.</div>
         </div>
+    </div>
     </div>
 </div>

@@ -53,17 +53,20 @@ export class InfoComponent implements OnInit {
   }
 
   onRetriveClick() {
-
+    this.loading = true;
     this.apiService.getAPI(API_URL.RETRIEVE_ALL_REPORTS).subscribe({
       next: (response: any) => {
         this.dataSource.data = response || dummyResponse;
         this.snackBar.open('Reports upload successfully !', 'success', {
           duration: 3000
         });
+        this.loading = false;
       }, error: (err: any) => {
-        
+        this.loading = false;
+        this.snackBar.open('Something went wrong !', 'error', {
+          duration: 3000
+        });
       }
     })
-    this.loading = true;
   }
 }

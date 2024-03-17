@@ -21,7 +21,7 @@ export class UploadComponent implements OnInit {
     documentUrl: new FormControl(null),
     yearOfReport: new FormControl(null, Validators.required)
   });
-
+  loading = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -29,6 +29,9 @@ export class UploadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.documentForm.controls.yearOfReport.valueChanges.subscribe((value: number) => {
+      this.isYearInvalid = !(value && value <= 2024 && value >= 1900);
+    })
   }
 
   addDocument() {
@@ -54,34 +57,42 @@ export class UploadComponent implements OnInit {
   }
 
   onUploadReports() {
-    const payload = this.generatePayload();
-    this.apiService.postAPI(API_URL.UPLOAD_ALL_REPORTS, payload, null).subscribe({
+    this.loading= true;
+    this.apiService.postAPI(API_URL.UPLOAD_ALL_REPORTS, this.generatePayload(), null).subscribe({
       next: (response: any) => {
         this.snackBar.open('Reports upload successfully !', 'success', {
           duration: 3000
         });
+        this.loading = false;
       }, error: (err: any) => {
-
+        this.snackBar.open('Something went wrong !', 'error', {
+          duration: 3000
+        });
+        this.loading = false;
       }
     })
-
   }
 
   generatePayload() {
-    let payload = null;
+    const formdata: FormData = new FormData();
+    if(this.fileToUpload.length > 0) {
+      this.fileToUpload.forEach((file: Blob) => {
+        formdata.append('files[]', file);
+      });
+    }
+   
     if (this.fileToUpload.length > 0
       && this.documentForm.controls.yearOfReport.value) {
-      payload = {
-        files: this.fileToUpload,
+      const payload = {
         yearOfReport: this.documentForm.controls.yearOfReport.value,
         documentUrl: this.documentForm.controls.documentUrl.value
       };
+      formdata.append('uploadData', JSON.stringify(payload));
     }
-    return payload;
+    return formdata;
   }
 
   changeFile(evt: any, index: number) {
     this.fileToUpload[index] = evt.target.files[0];
   }
-
 }
