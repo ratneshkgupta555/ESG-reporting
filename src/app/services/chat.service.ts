@@ -23,10 +23,10 @@ export class ChatService {
     conversation = new Subject<Message[]>();
 
     messageMap: any = {
-        "Hi": "Please enter report year",
-        "Hello": "Please enter report year",
-        "Who are you": "I am your bot, How can I assist you ",
-        "What is Angular": "Angular is the best framework ever",
+        "hi": "Please enter report year",
+        "hello": "Please enter report year",
+        "who are you": "I am your bot, How can I assist you ",
+        "what is angular": "Angular is the best framework ever",
         "default": "I can't understand. Can you please repeat"
     };
 
@@ -61,7 +61,7 @@ export class ChatService {
     }
 
     private calculatingBotAnswer(msg: string) {
-        const userMessage = new Message("user", msg);
+        const userMessage = new Message("user", msg.toLowerCase());
         this.conversation.next([userMessage]);
         const botMessage = new Message("bot", this.getBotMessage(msg));
 
@@ -85,7 +85,7 @@ export class ChatService {
             this.isQuestionAsked = true;
             return "Please enter your question";
         }
-        let answer = this.messageMap[question];
+        let answer = this.messageMap[question.toLowerCase().trim()];
         return answer || this.messageMap["default"];
 
     }
